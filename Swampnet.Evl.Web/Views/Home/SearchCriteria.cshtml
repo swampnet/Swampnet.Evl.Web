@@ -1,0 +1,125 @@
+﻿@model Swampnet.Evl.Web.Models.HomeViewModels.EventSearchCriteriaViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="search-criteria">
+            <form asp-action="Index">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Summary" class="control-label"></label>
+                    <input asp-for="Summary" class="form-control" />
+                    <span asp-validation-for="Summary" class="text-danger"></span>
+                    <div style="margin-top:8px">
+                        <a data-toggle="collapse" href="#advanced-options" role="button" aria-expanded="false" aria-controls="advanced-options">Advanced...</a>
+                    </div>
+                </div>
+
+                <div class="collapse multi-collapse" id="advanced-options">
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label"></label>
+                        <input asp-for="Category" class="form-control" />
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+
+                    @*<div class="form-group">
+                        <label asp-for="TimestampUtc" class="control-label"></label>
+                        <input asp-for="TimestampUtc" class="form-control" />
+                        <span asp-validation-for="TimestampUtc" class="text-danger"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="Source" class="control-label"></label>
+                        <input asp-for="Source" class="form-control" />
+                        <span asp-validation-for="Source" class="text-danger"></span>
+                    </div>
+                    @*<div class="form-group">
+                        <label asp-for="SourceVersion" class="control-label"></label>
+                        <input asp-for="SourceVersion" class="form-control" />
+                        <span asp-validation-for="SourceVersion" class="text-danger"></span>
+                    </div>*@
+                    <div class="form-group">
+                        <label asp-for="Tags" class="control-label"></label>
+                        <input asp-for="Tags" class="form-control" />
+                        <span asp-validation-for="Tags" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Properties" class="control-label"></label>
+                        <input asp-for="Properties" class="form-control" />
+                        <span asp-validation-for="Properties" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="ShowDebug" /> @Html.DisplayNameFor(model => model.ShowDebug)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="ShowInformation" /> @Html.DisplayNameFor(model => model.ShowInformation)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="ShowError" /> @Html.DisplayNameFor(model => model.ShowError)
+                            </label>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <label asp-for="FromDate" class="control-label"></label>
+                        <input asp-for="FromDate" class="form-control" />
+                        <span asp-validation-for="FromDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FromHour" class="control-label"></label>
+                        <input asp-for="FromHour" class="form-control" />
+                        <span asp-validation-for="FromHour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ToDate" class="control-label"></label>
+                        <input asp-for="ToDate" class="form-control" />
+                        <span asp-validation-for="ToDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ToHour" class="control-label"></label>
+                        <input asp-for="ToHour" class="form-control" />
+                        <span asp-validation-for="ToHour" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PageSize" class="control-label"></label>
+                        <input asp-for="PageSize" class="form-control" />
+                        <span asp-validation-for="PageSize" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Page" class="control-label"></label>
+                        <input asp-for="Page" class="form-control" />
+                        <span asp-validation-for="Page" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="HasCriteria" /> @Html.DisplayNameFor(model => model.HasCriteria)
+                            </label>
+                        </div>
+                    </div>*@
+
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" formmethod="get" value="Search" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

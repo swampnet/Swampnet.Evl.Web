@@ -23,16 +23,16 @@ namespace Swampnet.Evl.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(EventSearchCriteriaViewModel criteria = null)
         {
             HomeViewModel vm = null;
 
             var user = await _userManager.GetUserAsync(User);
             if (user != null && user.ActiveApiKey.HasValue)
             {
-                var results = await SearchAsync(user.ActiveApiKey.Value, null);
+                var results = await SearchAsync(user.ActiveApiKey.Value, criteria);
 
-                vm = new HomeViewModel(results);
+                vm = new HomeViewModel(results, criteria);
             }
 
             return View(vm);

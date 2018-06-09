@@ -5,13 +5,9 @@
 
 @if(Model?.Results != null)
 {
-    foreach(var evt in Model.Results)
-    {
-        <div>
-            @evt.TimestampUtc.ToLongTimeString()
-            @evt.Summary
-        </div>
-    }
+    <br/>
+    @Html.Partial("SearchCriteria", Model.Criteria);
+    @Html.Partial("SearchResults", Model.Results);
 }
 else
 {
