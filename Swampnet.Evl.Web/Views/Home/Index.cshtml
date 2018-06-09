@@ -1,4 +1,19 @@
-﻿@{
+﻿@model Swampnet.Evl.Web.Models.HomeViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+@if(Model?.Results != null)
+{
+    foreach(var evt in Model.Results)
+    {
+        <div>
+            @evt.TimestampUtc.ToLongTimeString()
+            @evt.Summary
+        </div>
+    }
+}
+else
+{
+    <div>TODO: Add api-key(s)</div>
+}
