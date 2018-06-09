@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Swampnet.Core.Evl;
 using Swampnet.Evl.Web.Models;
@@ -16,10 +17,12 @@ namespace Swampnet.Evl.Web.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(UserManager<ApplicationUser> userManager)
+        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
+            _configuration = configuration;
         }
 
 
@@ -38,6 +41,14 @@ namespace Swampnet.Evl.Web.Controllers
             return View(vm);
         }
 
+
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var vm = await GetAsync<EventDetailsViewModel>(user.ActiveApiKey.Value, $"events/{id}");
+
+            return View(vm);
+        }
 
         public IActionResult About()
         {
@@ -69,7 +80,7 @@ namespace Swampnet.Evl.Web.Controllers
         {
             using(var client = new HttpClient())
             {
-                var endpoint = "https://swamp-evl.azurewebsites.net"; // from cfg
+                var endpoint = _configuration["evl:endpoint"];
                 client.DefaultRequestHeaders.Add("x-api-key", key.ToString());
 
                 var url = $"{endpoint}/{action}";

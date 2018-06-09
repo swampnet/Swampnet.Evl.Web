@@ -27,13 +27,10 @@ namespace Swampnet.Evl.Web.Models.HomeViewModels
         /// Comma separated list of tags
         /// </summary>
 		public string Tags { get; set; }
-
         public string Properties { get; set; }
-
         public bool ShowDebug { get; set; }
         public bool ShowInformation { get; set; } = true;
         public bool ShowError { get; set; } = true;
-
         public DateTime? FromDate { get; set; }
         public int FromHour { get; set; }
         public DateTime? ToDate { get; set; }

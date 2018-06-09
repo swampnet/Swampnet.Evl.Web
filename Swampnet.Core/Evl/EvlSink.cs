@@ -110,7 +110,7 @@ namespace Serilog.Sinks.Evl
         protected virtual async Task PostAsync(IEnumerable<Event> events)
         {
             var rs = await _client.PostAsync(
-                    _endpoint + "/bulk",
+                    _endpoint + "/events/bulk",
                     new StringContent(
                         JsonConvert.SerializeObject(events),
                         Encoding.UTF8,
