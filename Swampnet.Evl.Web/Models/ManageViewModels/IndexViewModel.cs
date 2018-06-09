@@ -21,5 +21,8 @@ namespace Swampnet.Evl.Web.Models.ManageViewModels
         public string PhoneNumber { get; set; }
 
         public string StatusMessage { get; set; }
+
+        [Display(Name = "Active Api-Key")]
+        public string ActiveApiKey { get; set; }
     }
 }

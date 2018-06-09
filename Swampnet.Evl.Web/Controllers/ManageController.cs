@@ -60,6 +60,7 @@ namespace Swampnet.Evl.Web.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+                ActiveApiKey = user.ActiveApiKey?.ToString(),
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
@@ -101,6 +102,19 @@ namespace Swampnet.Evl.Web.Controllers
                     throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
                 }
             }
+
+            if (string.IsNullOrEmpty(model.ActiveApiKey))
+            {
+                user.ActiveApiKey = null;
+                await _userManager.UpdateAsync(user);
+            }
+            else if(user.ActiveApiKey != Guid.Parse(model.ActiveApiKey))
+            {
+                user.ActiveApiKey = Guid.Parse(model.ActiveApiKey);
+                await _userManager.UpdateAsync(user);
+            }
+
+
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
