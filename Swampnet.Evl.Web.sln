@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27729.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swampnet.Evl.Web", "Swampnet.Evl.Web\Swampnet.Evl.Web.csproj", "{A1AED660-B2CD-47D9-918E-4FEE4A5A875D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swampnet.Evl.Web", "Swampnet.Evl.Web\Swampnet.Evl.Web.csproj", "{A1AED660-B2CD-47D9-918E-4FEE4A5A875D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{ED48B566-2874-49E0-9EAD-4AD0E58A7A1F}"
 	ProjectSection(SolutionItems) = preProject
 		Scripts\Create AspNet Tables.sql = Scripts\Create AspNet Tables.sql
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swampnet.Core", "Swampnet.Core\Swampnet.Core.csproj", "{A03DF24E-374C-49AD-BB27-A6A859F0820F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{A1AED660-B2CD-47D9-918E-4FEE4A5A875D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1AED660-B2CD-47D9-918E-4FEE4A5A875D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1AED660-B2CD-47D9-918E-4FEE4A5A875D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A03DF24E-374C-49AD-BB27-A6A859F0820F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A03DF24E-374C-49AD-BB27-A6A859F0820F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A03DF24E-374C-49AD-BB27-A6A859F0820F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A03DF24E-374C-49AD-BB27-A6A859F0820F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swampnet.Evl.Web.Data;
 using Swampnet.Evl.Web.Models;
 using Swampnet.Evl.Web.Services;
+using Serilog;
 
 namespace Swampnet.Evl.Web
 {
@@ -42,6 +43,17 @@ namespace Swampnet.Evl.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.EvlSink(
+                    Configuration["evl:api-key"],
+                    Configuration["evl:endpoint"],
+                    Configuration["evl:source"],
+                    null)
+                .CreateLogger();
+
+            Log.Information("Start");
+
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
