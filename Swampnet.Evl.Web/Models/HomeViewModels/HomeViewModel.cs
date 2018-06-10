@@ -15,7 +15,10 @@ namespace Swampnet.Evl.Web.Models.HomeViewModels
             Results = results?.Select(r => new EventSummaryViewModel() {
                 Id = r.Id,
                 Summary = r.Summary,
-                TimestampUtc = r.TimestampUtc
+                TimestampUtc = r.TimestampUtc,
+                Category = r.Category,
+                Source = r.Source,
+                Tags = r.Tags
             });
         }
 

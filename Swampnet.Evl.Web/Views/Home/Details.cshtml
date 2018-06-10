@@ -9,12 +9,6 @@
 <div>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.TimestampUtc)
         </dt>
         <dd>
@@ -38,11 +32,78 @@
         <dd>
             @Html.DisplayFor(model => model.Source)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceVersion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SourceVersion)
-        </dd>
+
+        @if (Model.Tags.Any())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Tags)
+            </dt>
+            <dd>
+                @foreach (var tag in Model.Tags)
+                {
+                    <span class="evt-tag">@tag.ToUpper()</span>
+                }
+            </dd>
+        }
     </dl>
+
+    @if (Model.Properties.Any())
+    {
+        <div>
+            <dl class="dl-horizontal">
+                @foreach (var property in Model.Properties)
+                {
+                    <dt>
+                        @property.Name
+                    </dt>
+                    <dd>
+                        @Html.FormatNewLines(property.Value)
+                    </dd>
+                }
+            </dl>
+        </div>
+    }
+
+    <!-- Any rules triggered by this event -->
+    @if (Model.Triggers.Any())
+    {
+        <h3>Rules Triggered</h3>
+        foreach (var trigger in Model.Triggers)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>@trigger.RuleName</h4>
+                            <small>@trigger.TimestampUtc</small>
+                        </div>
+                        <div class="panel-body">
+                            @foreach (var item in trigger.Actions)
+                            {
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="evl-action-type">@item.Type</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @foreach (var prp in item.Properties)
+                                        {
+                                            <strong>@prp.Name</strong>
+                                            @Html.FormatNewLines(prp.Value)
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if (!string.IsNullOrEmpty(item.Error))
+                                        {
+                                            <div class="evt-Error">@item.Error</div>
+                                        }
+                                    </div>
+                                </div>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
