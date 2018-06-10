@@ -52,7 +52,9 @@ namespace Swampnet.Evl.Web
                     null)
                 .CreateLogger();
 
-            Log.Information("Start");
+            Log.Logger
+                .WithTag("start")
+                .Information("Start");
 
             if (env.IsDevelopment())
             {
