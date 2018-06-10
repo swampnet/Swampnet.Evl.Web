@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Swampnet.Core\Swampnet.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\RuleViewModels\" />
+  </ItemGroup>
+
 </Project>

@@ -1,10 +1,6 @@
-﻿using Swampnet.Core.Evl;
-using Swampnet.Evl.Web.Models.HomeViewModels;
+﻿using Swampnet.Evl.Web.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Swampnet.Evl.Web

@@ -36,6 +36,7 @@ namespace Swampnet.Evl.Web
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddSingleton<IEvlApi, EvlApi>();
 
             services.AddMvc();
         }

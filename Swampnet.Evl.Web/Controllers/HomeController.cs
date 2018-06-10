@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Swampnet.Core.Evl;
 using Swampnet.Evl.Web.Models;
 using Swampnet.Evl.Web.Models.HomeViewModels;
+using Swampnet.Evl.Web.Services;
 
 namespace Swampnet.Evl.Web.Controllers
 {
@@ -18,11 +19,12 @@ namespace Swampnet.Evl.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IEvlApi _evl;
 
-        public HomeController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public HomeController(UserManager<ApplicationUser> userManager, IEvlApi evl)
         {
             _userManager = userManager;
-            _configuration = configuration;
+            _evl = evl;
         }
 
 
@@ -33,7 +35,7 @@ namespace Swampnet.Evl.Web.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user != null && user.ActiveApiKey.HasValue)
             {
-                var results = await SearchAsync(user.ActiveApiKey.Value, criteria);
+                var results = await _evl.SearchAsync(user.ActiveApiKey.Value, criteria);
 
                 vm = new HomeViewModel(results, criteria);
             }
@@ -45,7 +47,8 @@ namespace Swampnet.Evl.Web.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var user = await _userManager.GetUserAsync(User);
-            var vm = await GetAsync<EventDetailsViewModel>(user.ActiveApiKey.Value, $"events/{id}");
+
+            var vm = await _evl.DetailsAsync(user.ActiveApiKey.Value, id);
 
             return View(vm);
         }
@@ -70,38 +73,5 @@ namespace Swampnet.Evl.Web.Controllers
         }
 
 
-        private Task<IEnumerable<EventSummary>> SearchAsync(Guid key, EventSearchCriteriaViewModel criteria)
-        {
-            return GetAsync<IEnumerable<EventSummary>>(key, "events", criteria?.ToQuery());
-        }
-
-
-        private async Task<T> GetAsync<T>(Guid key, string action, string query = null)
-        {
-            using(var client = new HttpClient())
-            {
-                var endpoint = _configuration["evl:endpoint"];
-                client.DefaultRequestHeaders.Add("x-api-key", key.ToString());
-
-                var url = $"{endpoint}/{action}";
-
-                if (!string.IsNullOrEmpty(query))
-                {
-                    url += "?" + query;
-                }
-
-                Debug.WriteLine("Evl: " + url);
-
-                var rs = await client
-                    .GetAsync(url)
-                    .ConfigureAwait(false);
-
-                rs.EnsureSuccessStatusCode();
-
-                var json = await rs.Content.ReadAsStringAsync();
-
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-        }
     }
 }
