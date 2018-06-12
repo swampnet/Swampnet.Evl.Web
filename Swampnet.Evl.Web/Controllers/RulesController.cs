@@ -22,21 +22,39 @@ namespace Swampnet.Evl.Web.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+
+        // Return all rules
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var rules = await _api.RulesAsync(user.ActiveApiKey.Value);
+
+            return View(rules);
+        }
+
+
+        public IActionResult Details(Guid id)
         {
             return View();
         }
 
 
+        [HttpPost]
+        public IActionResult Save(RuleViewModel rule)
+        {
+            return Ok();
+        }
+
+
         #region API
 
-        [HttpGet("rules/json")]
-        public async Task<IActionResult> RuleData()
+        [HttpGet("rules/details/{id}/json")]
+        public async Task<IActionResult> RuleData(Guid id)
         {
             var user = await _userManager.GetUserAsync(User);
-            var rules = await _api.RulesAsync(user.ActiveApiKey.Value);
+            var rule = await _api.RuleAsync(user.ActiveApiKey.Value, id);
 
-            return Json(rules);
+            return Json(rule);
         }
 
         #endregion

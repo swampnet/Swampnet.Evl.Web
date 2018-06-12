@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div id="rules">
+    <div v-if="rule">
+        <h2>{{rule.name}}</h2>
+
+        <div v-for="action in rule.actions">
+            action: {{action.type}}
+            <div class="row" v-for="prp in action.properties">
+                <div class="col-md-2">
+                    <label>{{prp.name}}</label>
+                </div>
+                <div class="col-md-10">
+                    <input v-model="prp.value" />
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <hr/>
+    <div>
+        {{id}}
+        <pre v-if="rule">{{rule}}</pre>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- production version, optimized for size and speed -->
+    @*<script src="https://cdn.jsdelivr.net/npm/vue"></script>*@
+
+    <script src="~/js/rule-details.js"></script>
+}
