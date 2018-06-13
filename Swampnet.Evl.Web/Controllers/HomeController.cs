@@ -18,7 +18,6 @@ namespace Swampnet.Evl.Web.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IConfiguration _configuration;
         private readonly IEvlApi _evl;
 
         public HomeController(UserManager<ApplicationUser> userManager, IEvlApi evl)
