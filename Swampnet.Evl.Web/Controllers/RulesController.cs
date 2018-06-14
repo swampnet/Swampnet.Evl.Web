@@ -39,9 +39,11 @@ namespace Swampnet.Evl.Web.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult Save(RuleViewModel rule)
+        [HttpPut("rules/details/{id}")]
+        public async Task<IActionResult> Save(Guid id, [FromBody] RuleViewModel rule)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             return Ok();
         }
 

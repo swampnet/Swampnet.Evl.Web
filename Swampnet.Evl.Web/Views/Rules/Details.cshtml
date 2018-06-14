@@ -9,6 +9,9 @@
     <div v-if="rule">
         <h2>{{rule.name}}</h2>
 
+        <expression v-bind:exp="rule.expression"></expression>
+
+
         <div v-for="action in rule.actions">
             action: {{action.type}}
             <div class="row" v-for="prp in action.properties">
@@ -20,13 +23,17 @@
                 </div>
             </div>
         </div>
+
     </div>
-    
-    <hr/>
+
+    <button v-on:click="save">Save</button>
+
+    <hr />
     <div>
         {{id}}
         <pre v-if="rule">{{rule}}</pre>
     </div>
+
 </div>
 
 
