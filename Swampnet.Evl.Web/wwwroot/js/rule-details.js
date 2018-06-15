@@ -1,10 +1,9 @@
 ﻿Vue.component('expression', {
     props: ['exp'],
     template: `
-      <div v-if="exp">
-        {{exp.operand}} {{exp.operator}} {{exp.value}}
-        <expression v-for="child in exp.children" v-bind:exp="child" v-bind:key="child.key">
-        </expression>
+      <div v-if="exp" class="evt-detail-expressions">
+        <input v-model="exp.operand"> <input v-model="exp.operator"> <input v-model="exp.value">
+        <expression v-for="child in exp.children" v-bind:exp="child" v-bind:key="child.key"></expression>
       </div>`
 })
 

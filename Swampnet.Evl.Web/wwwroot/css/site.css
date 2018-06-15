@@ -48,3 +48,11 @@
     font-size: smaller;
     font-weight: bold;
 }
+
+div.evt-detail-expressions {
+    margin: 5px;
+    margin-left: 10px;
+    border-color: red;
+    border-style: solid;
+    border-width: 1px;
+}
