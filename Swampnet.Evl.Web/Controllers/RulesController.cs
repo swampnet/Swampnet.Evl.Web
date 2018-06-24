@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Swampnet.Evl.Web.Models;
 using Swampnet.Evl.Web.Services;
 
@@ -42,7 +43,16 @@ namespace Swampnet.Evl.Web.Controllers
         [HttpPut("rules/details/{id}")]
         public async Task<IActionResult> Save(Guid id, [FromBody] RuleViewModel rule)
         {
-            var user = await _userManager.GetUserAsync(User);
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                await _api.UpdateRuleAsync(user.ActiveApiKey.Value, rule);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+            }
 
             return Ok();
         }

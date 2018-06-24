@@ -62,7 +62,8 @@ namespace Swampnet.Evl.Web.Controllers
                 PhoneNumber = user.PhoneNumber,
                 ActiveApiKey = user.ActiveApiKey?.ToString(),
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                TimeZone = user.TimeZone
             };
 
             return View(model);
@@ -114,6 +115,11 @@ namespace Swampnet.Evl.Web.Controllers
                 await _userManager.UpdateAsync(user);
             }
 
+            if(model.TimeZone != user.TimeZone)
+            {
+                user.TimeZone = model.TimeZone;
+                await _userManager.UpdateAsync(user);
+            }
 
 
             StatusMessage = "Your profile has been updated";

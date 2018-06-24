@@ -36,7 +36,7 @@ namespace Swampnet.Evl.Web.Controllers
             {
                 var results = await _evl.SearchAsync(user.ActiveApiKey.Value, criteria);
 
-                vm = new HomeViewModel(results, criteria);
+                vm = new HomeViewModel(results, criteria, user.TimeZone);
             }
 
             return View(vm);

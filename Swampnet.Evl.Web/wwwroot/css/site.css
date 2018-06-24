@@ -49,10 +49,29 @@
     font-weight: bold;
 }
 
-div.evt-detail-expressions {
-    margin: 5px;
-    margin-left: 10px;
-    border-color: red;
-    border-style: solid;
-    border-width: 1px;
+label.property-name {
+    text-align: right;
+    font-weight: bold;
+}
+
+
+div.evt-detail-expression-container {
+    margin-left: 20px;
+    border-left-style: solid;
+    border-left-width: medium;
+    border-left-color: black;
+    /*border-radius: 20px;*/
+    background-color: lightcyan;
+}
+
+div.evt-detail-expression-highlight {
+    background-color: lightgoldenrodyellow;
+}
+
+div.evt-detail-expression-child {
+    margin-left: 20px;
+}
+
+button.evt-detail-expression-delete {
+    float: right;
 }

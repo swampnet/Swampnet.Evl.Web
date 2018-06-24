@@ -1,37 +1,37 @@
-﻿@model IEnumerable<Swampnet.Evl.Web.Models.EventSummaryViewModel>
-
+﻿@model Swampnet.Evl.Web.Models.HomeViewModels.HomeViewModel
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TimestampUtc)
+                Timestamp
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Summary)
+                Summary
             </th>
             <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimestampUtc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Summary)
-            </td>
-            <td>
-                @foreach (var tag in item.Tags.OrderBy(t => t.ToUpper()))
-                {
-                    <span class="evt-tag">@tag.ToUpper()</span>
-                }
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>
+                    @TimeZoneInfo.ConvertTime(item.TimestampUtc, TimeZoneInfo.Utc, Model.TimeZone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Summary)
+                </td>
+                <td>
+                    @foreach (var tag in item.Tags.OrderBy(t => t.ToUpper()))
+                    {
+                        <span class="evt-tag">@tag.ToUpper()</span>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,5 +25,12 @@ namespace Swampnet.Evl.Web.Models.ManageViewModels
 
         [Display(Name = "Active Api-Key")]
         public string ActiveApiKey { get; set; }
+
+        public string TimeZone { get; set; }
+
+
+        public IEnumerable<SelectListItem> TimeZones { get; } = TimeZoneInfo.GetSystemTimeZones().Select(tz =>
+            new SelectListItem { Value = tz.Id, Text = tz.DisplayName }
+        );
     }
 }

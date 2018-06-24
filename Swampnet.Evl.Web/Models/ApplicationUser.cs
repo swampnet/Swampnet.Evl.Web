@@ -10,5 +10,6 @@ namespace Swampnet.Evl.Web.Models
     public class ApplicationUser : IdentityUser
     {
         public Guid? ActiveApiKey { get; set; }
+        public string TimeZone { get; set; }
     }
 }

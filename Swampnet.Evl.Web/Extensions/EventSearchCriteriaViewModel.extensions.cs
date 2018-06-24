@@ -13,6 +13,19 @@ namespace Swampnet.Evl.Web
 
             string categories = "";
 
+            if (criteria.ShowDebug)
+            {
+                categories += "-debug";
+            }
+            if (criteria.ShowInformation)
+            {
+                categories += "-information";
+            }
+            if (criteria.ShowError)
+            {
+                categories += "-error";
+            }
+
             if (!string.IsNullOrEmpty(categories))
             {
                 query.AppendFormat("&categories={0}", categories);

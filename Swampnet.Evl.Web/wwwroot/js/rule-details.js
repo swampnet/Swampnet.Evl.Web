@@ -1,21 +1,69 @@
 ﻿Vue.component('expression', {
-    props: ['exp'],
+    props: {
+        exp: Object,
+        parent: Object,
+        rule: Object
+    },
+    methods: {
+        isContainer() {
+            return (this.exp.operator == 'MATCH_ALL' || this.exp.operator == 'MATCH_ANY');
+        },
+        addChild() {
+            var e = {
+                id: uuidv4(),
+                operand: 'Summary',
+                operator: 'EQ',
+                children: []
+            };
+            this.exp.children.push(e);
+        },
+        deleteExpression(e) {
+            if (this.parent) {
+                var index = this.parent.children.indexOf(e);
+                if (index > -1) {
+                    this.parent.children.splice(index, 1);
+                }
+            }
+        }
+    },
     template: `
-      <div v-if="exp" class="evt-detail-expressions">
-        <input v-model="exp.operand"> <input v-model="exp.operator"> <input v-model="exp.value">
-        <expression v-for="child in exp.children" v-bind:exp="child" v-bind:key="child.key"></expression>
-      </div>`
+    <div v-if="exp">
+      <div v-if="isContainer()" class="evt-detail-expression-container">
+        <select v-model="exp.operator">
+          <option v-for="option in rule.operators" v-bind:value="option">
+            {{ option }}
+          </option>
+        </select>
+
+        <button v-if="parent" v-on:click="deleteExpression(exp)" class="evt-detail-expression-delete">x</button>
+        <expression v-for="child in exp.children" v-bind:exp="child" v-bind:parent="exp" v-bind:rule="rule" v-bind:key="child.key"></expression>
+        
+        <button v-on:click="addChild()">add</button>
+      </div>
+
+
+      <div v-else class="evt-detail-expression-child">
+        <select v-model="exp.operand">
+          <option v-for="option in rule.operands" v-bind:value="option">
+            {{ option }}
+          </option>
+        </select>
+
+        <input v-if="exp.operand=='Property'" v-model="exp.argument">
+
+        <select v-model="exp.operator">
+          <option v-for="option in rule.operators" v-bind:value="option">
+            {{ option }}
+          </option>
+        </select>
+
+        <input v-model="exp.value">
+        <button v-on:click="deleteExpression(exp)" class="evt-detail-expression-delete">x</button>
+      </div>
+
+    </div>
+`
 })
-
-
-//function assignKey(e) {
-//    if (e != null) {
-//        e.forEach(x => {
-//            x.key = uuidv4();
-//        });
-//        assignKey(e.children);
-//    }
-//}
 
 
 var app = new Vue({
