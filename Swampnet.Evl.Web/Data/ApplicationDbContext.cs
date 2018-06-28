@@ -10,6 +10,8 @@ namespace Swampnet.Evl.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ApiKey> ApiKeys { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -24,6 +26,7 @@ namespace Swampnet.Evl.Web.Data
             // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.HasDefaultSchema("evl-web");
+            builder.Entity<ApiKey>().ToTable("ApiKey");
         }
     }
 }
