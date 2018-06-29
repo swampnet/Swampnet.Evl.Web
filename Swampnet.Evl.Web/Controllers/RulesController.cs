@@ -40,6 +40,15 @@ namespace Swampnet.Evl.Web.Controllers
         }
 
 
+        public async Task<IActionResult> Create()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var rule = await _api.CreateRuleAsync(user.ActiveApiKey.Value);
+
+            return RedirectToAction("Details", new { id = rule.Id });
+        }
+
+
         [HttpPut("rules/details/{id}")]
         public async Task<IActionResult> Save(Guid id, [FromBody] RuleViewModel rule)
         {
@@ -55,6 +64,29 @@ namespace Swampnet.Evl.Web.Controllers
             }
 
             return Ok();
+        }
+
+        public IActionResult Delete(Guid id)
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                var user = await _userManager.GetUserAsync(User);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
 
 

@@ -18,6 +18,7 @@ namespace Swampnet.Evl.Web.Services
         Task<EventDetailsViewModel> DetailsAsync(Guid key, Guid id);
         Task<IEnumerable<RuleSummaryViewModel>> RulesAsync(Guid key);
         Task<RuleViewModel> RuleAsync(Guid key, Guid id);
+        Task<RuleViewModel> CreateRuleAsync(Guid key);
         Task UpdateRuleAsync(Guid key, RuleViewModel rule);
     }
 
@@ -51,6 +52,11 @@ namespace Swampnet.Evl.Web.Services
             return GetAsync<RuleViewModel>(key, $"rules/{id}");
         }
 
+        public Task<RuleViewModel> CreateRuleAsync(Guid key)
+        {
+            return PostAsync<RuleViewModel>(key, "rules");
+        }
+
         public Task UpdateRuleAsync(Guid key, RuleViewModel rule)
         {
             return PutAsync(key, $"rules/{rule.Id}", rule);
@@ -76,6 +82,32 @@ namespace Swampnet.Evl.Web.Services
                 rs.EnsureSuccessStatusCode();
 
                 var json = await rs.Content.ReadAsStringAsync();
+            }
+
+        }
+
+        private async Task<T> PostAsync<T>(Guid key, string action, object payload = null)
+        {
+            using (var client = new HttpClient())
+            {
+                var endpoint = _cfg["evl:endpoint"];
+                client.DefaultRequestHeaders.Add("x-api-key", key.ToString());
+
+                var url = $"{endpoint}/{action}";
+
+                var rs = await client
+                    .PostAsync(url, payload == null 
+                        ? null 
+                        : new StringContent(
+                            JsonConvert.SerializeObject(payload),
+                            Encoding.UTF8,
+                            "application/json"))
+                    .ConfigureAwait(false);
+
+                rs.EnsureSuccessStatusCode();
+
+                var json = await rs.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(json);
             }
 
         }
