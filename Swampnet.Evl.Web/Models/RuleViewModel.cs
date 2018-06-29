@@ -43,8 +43,9 @@ namespace Swampnet.Evl.Web.Models
         /// </summary>
         public ActionDefinition[] Actions { get; set; }
 
-        public IEnumerable<string> Operands => Enum.GetValues(typeof(RuleOperandType)).Cast<RuleOperandType>().Select(x => x.ToString());
-        public IEnumerable<string> Operators => Enum.GetValues(typeof(RuleOperatorType)).Cast<RuleOperatorType>().Select(x => x.ToString());
+        //public IEnumerable<string> Operands => Enum.GetValues(typeof(RuleOperandType)).Cast<RuleOperandType>().Select(x => x.ToString());
+
+        public MetaData MetaData { get; set; }
     }
 
 

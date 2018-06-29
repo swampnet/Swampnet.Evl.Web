@@ -20,6 +20,7 @@ namespace Swampnet.Evl.Web.Services
         Task<RuleViewModel> RuleAsync(Guid key, Guid id);
         Task<RuleViewModel> CreateRuleAsync(Guid key);
         Task UpdateRuleAsync(Guid key, RuleViewModel rule);
+        Task<MetaData> GetMetaDataAsync(Guid key);
     }
 
 
@@ -47,9 +48,12 @@ namespace Swampnet.Evl.Web.Services
             return GetAsync<IEnumerable<RuleSummaryViewModel>>(key, $"rules");
         }
 
-        public Task<RuleViewModel> RuleAsync(Guid key, Guid id)
+        public async Task<RuleViewModel> RuleAsync(Guid key, Guid id)
         {
-            return GetAsync<RuleViewModel>(key, $"rules/{id}");
+            var rule = await GetAsync<RuleViewModel>(key, $"rules/{id}");
+            rule.MetaData = await GetAsync<MetaData>(key, $"meta");
+
+            return rule;
         }
 
         public Task<RuleViewModel> CreateRuleAsync(Guid key)
@@ -62,6 +66,10 @@ namespace Swampnet.Evl.Web.Services
             return PutAsync(key, $"rules/{rule.Id}", rule);
         }
 
+        public Task<MetaData> GetMetaDataAsync(Guid key)
+        {
+            return GetAsync<MetaData>(key, "meta");
+        }
 
         private async Task PutAsync(Guid key, string action, object payload)
         {

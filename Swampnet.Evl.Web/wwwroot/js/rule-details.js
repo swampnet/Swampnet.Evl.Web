@@ -30,8 +30,8 @@
     <div v-if="exp">
       <div v-if="isContainer()" class="evt-detail-expression-container">
         <select v-model="exp.operator">
-          <option v-for="option in rule.operators" v-bind:value="option">
-            {{ option }}
+          <option v-for="option in rule.metaData.operators" v-bind:value="option.code">
+            {{ option.display }}
           </option>
         </select>
 
@@ -44,16 +44,16 @@
 
       <div v-else class="evt-detail-expression-child">
         <select v-model="exp.operand">
-          <option v-for="option in rule.operands" v-bind:value="option">
-            {{ option }}
+          <option v-for="option in rule.metaData.operands" v-bind:value="option.name">
+            {{ option.name }}
           </option>
         </select>
 
         <input v-if="exp.operand=='Property'" v-model="exp.argument">
 
         <select v-model="exp.operator">
-          <option v-for="option in rule.operators" v-bind:value="option">
-            {{ option }}
+          <option v-for="option in rule.metaData.operators" v-bind:value="option.code">
+            {{ option.display }}
           </option>
         </select>
 
