@@ -24,6 +24,9 @@
                     this.parent.children.splice(index, 1);
                 }
             }
+        },
+        getOperandMetaData(name) {
+            return this.rule.metaData.operands.find(o => o.name == name);
         }
     },
     template: `
@@ -49,7 +52,7 @@
           </option>
         </select>
 
-        <input v-if="exp.operand=='Property'" v-model="exp.argument">
+        <input v-if="getOperandMetaData(exp.operand).dataType == 'require-args'" v-model="exp.argument">
 
         <select v-model="exp.operator">
           <option v-for="option in rule.metaData.operators" v-bind:value="option.code">
@@ -57,7 +60,17 @@
           </option>
         </select>
 
-        <input v-model="exp.value">
+        <span v-if="getOperandMetaData(exp.operand).dataType == 'select'">
+            <select v-model="exp.value">
+              <option v-for="option in getOperandMetaData(exp.operand).options" v-bind:value="option.value">
+                {{ option.display }}
+              </option>
+            </select>
+        </span>
+        <span v-else>
+            <input v-model="exp.value">
+        </span>
+
         <button v-on:click="deleteExpression(exp)" class="evt-detail-expression-delete">x</button>
       </div>
 
@@ -73,6 +86,7 @@ var app = new Vue({
         rule: null
     },
     methods: {
+        // Save the current rule
         async save(e) {
             try {
                 await axios.put('', this.rule);
@@ -80,6 +94,47 @@ var app = new Vue({
                 console.log(error);
             }
         },
+
+        // Add a new action
+        addAction(action) {
+            if (this.rule.actions == null) {
+                this.rule.actions = [];
+            }
+
+            var a = {
+                isActive: true,
+                type: action.type,
+                properties: []
+            };
+
+            if (action.properties != null) {
+                action.properties.forEach(function (item) {
+                    a.properties.push({
+                        category: '',
+                        name: item.name,
+                        value: ''
+                    });
+                });
+            }
+
+            this.rule.actions.push(a);
+        },
+        // Delete an action
+        deleteAction(action) {
+            action.isActive = false;
+        },
+        // Figure out actionMetaData using type name
+        getMetaData(type) {
+            return this.rule.metaData.actionMetaData.find(i => i.type == type);
+        },
+
+        getMetaDataProperty(type, name) {
+            var actionMeta = this.getMetaData(type);
+
+            return actionMeta.properties.find(i => i.name == name);
+        },
+
+        // Generate a unique key for each expression entity
         assignKey(e) {
             if (e != null) {
                 e.forEach(x => {
