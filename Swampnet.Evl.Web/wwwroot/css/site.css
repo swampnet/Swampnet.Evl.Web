@@ -75,3 +75,18 @@ div.evt-detail-expression-child {
 button.evt-detail-expression-delete {
     float: right;
 }
+
+.evt-Debug {
+    font-size: small;
+    color: darkgrey;
+}
+
+.evt-Information {
+    font-size: small;
+    color: darkblue;
+}
+
+.evt-Error {
+    font-size: small;
+    color: red;
+}

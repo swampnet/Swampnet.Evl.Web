@@ -15,7 +15,7 @@
     <tbody>
         @foreach (var item in Model.Results)
         {
-            <tr>
+            <tr class="@("evt-" + item.Category)">
                 <td>
                     @TimeZoneInfo.ConvertTime(item.TimestampUtc, TimeZoneInfo.Utc, Model.TimeZone)
                 </td>
