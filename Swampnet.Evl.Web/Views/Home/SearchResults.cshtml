@@ -2,12 +2,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Timestamp
-            </th>
-            <th>
-                Summary
-            </th>
+            <th>Timestamp</th>
+            <th>Source</th>
+            <th>Summary</th>
             <th></th>
             <th></th>
         </tr>
@@ -18,6 +15,9 @@
             <tr class="@("evt-" + item.Category)">
                 <td>
                     @TimeZoneInfo.ConvertTime(item.TimestampUtc, TimeZoneInfo.Utc, Model.TimeZone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Source)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Summary)
