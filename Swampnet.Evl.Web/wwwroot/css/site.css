@@ -72,9 +72,9 @@ div.evt-detail-expression-child {
     margin-left: 20px;
 }
 
-button.evt-detail-expression-delete {
+/*button.evt-detail-expression-delete {
     float: right;
-}
+}*/
 
 button.evt-detail-action-add {
     margin:5px;
@@ -82,4 +82,8 @@ button.evt-detail-action-add {
 
 button.evt-detail-save {
     margin: 5px;
+}
+
+span.delete {
+    cursor: pointer;
 }

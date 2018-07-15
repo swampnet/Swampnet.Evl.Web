@@ -7,17 +7,21 @@
 
 <div id="rules">
     <div v-if="rule">
-        <h2>{{rule.name}}</h2>
+        <h2>
+            {{rule.name}}
+            <input type="checkbox" v-model="rule.isActive">
+        </h2>
         <input v-model="rule.name" />
 
         <expression v-bind:exp="rule.expression" v-bind:rule="rule"></expression>
 
         <br />
         <h3>Actions</h3>
-        <div v-for="action in rule.actions" v-if="action.isActive">
+        <div v-for="action in rule.actions">
             <h4>
                 {{getActionMetaData(action.type).name}}
-                <button v-on:click="deleteAction(action)">x</button>
+                <input type="checkbox" v-model="action.isActive">
+                <span class="glyphicon glyphicon-trash delete" v-on:click="deleteAction(action)"></span>
             </h4>
             <h5>{{getActionMetaData(action.type).description}}</h5>
             
