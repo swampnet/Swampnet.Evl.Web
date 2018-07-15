@@ -76,23 +76,26 @@
 
     </div>
 `
-})
+});
 
 
 var app = new Vue({
     el: '#rules',
     data: {
         id: '',
-        rule: null
+        rule: null,
+        isSaving: false
     },
     methods: {
         // Save the current rule
         async save(e) {
             try {
+                this.isSaving = true;
                 await axios.put('', this.rule);
             } catch (error) {
                 console.log(error);
             }
+            this.isSaving = false;
         },
 
         // Add a new action
@@ -119,19 +122,20 @@ var app = new Vue({
 
             this.rule.actions.push(a);
         },
+
         // Delete an action
         deleteAction(action) {
             action.isActive = false;
         },
-        // Figure out actionMetaData using type name
-        getMetaData(type) {
-            return this.rule.metaData.actionMetaData.find(i => i.type == type);
+
+        getActionMetaDataProperty(type, name) {
+            var actionMeta = this.getActionMetaData(type);
+
+            return actionMeta.properties.find(i => i.name === name);
         },
 
-        getMetaDataProperty(type, name) {
-            var actionMeta = this.getMetaData(type);
-
-            return actionMeta.properties.find(i => i.name == name);
+        getActionMetaData(type) {
+            return this.rule.metaData.actionMetaData.find(i => i.type === type);
         },
 
         // Generate a unique key for each expression entity

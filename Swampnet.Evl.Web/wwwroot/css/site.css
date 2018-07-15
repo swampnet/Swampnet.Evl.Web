@@ -75,3 +75,11 @@ div.evt-detail-expression-child {
 button.evt-detail-expression-delete {
     float: right;
 }
+
+button.evt-detail-action-add {
+    margin:5px;
+}
+
+button.evt-detail-save {
+    margin: 5px;
+}
