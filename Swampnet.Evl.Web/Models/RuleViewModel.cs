@@ -81,6 +81,7 @@ namespace Swampnet.Evl.Web.Models
     public class ActionDefinition
     {
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public string Type { get; set; }
 
         public Property[] Properties { get; set; }

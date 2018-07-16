@@ -72,18 +72,16 @@ div.evt-detail-expression-child {
     margin-left: 20px;
 }
 
-button.evt-detail-expression-delete {
+/*button.evt-detail-expression-delete {
     float: right;
+}*/
+
+button.evt-detail-action-add {
+    margin:5px;
 }
 
-.evt-Debug {
-    font-size: small;
-    color: darkgrey;
-}
-
-.evt-Information {
-    font-size: small;
-    color: darkblue;
+button.evt-detail-save {
+    margin: 5px;
 }
 
 .evt-Error {
@@ -93,4 +91,7 @@ button.evt-detail-expression-delete {
 
 tr.apikey-selected {
     background-color: aquamarine;
+}
+span.delete {
+    cursor: pointer;
 }

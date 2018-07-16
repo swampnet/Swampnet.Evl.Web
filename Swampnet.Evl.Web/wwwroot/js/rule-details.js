@@ -6,7 +6,7 @@
     },
     methods: {
         isContainer() {
-            return (this.exp.operator == 'MATCH_ALL' || this.exp.operator == 'MATCH_ANY');
+            return (this.exp.operator === 'MATCH_ALL' || this.exp.operator === 'MATCH_ANY');
         },
         addChild() {
             var e = {
@@ -19,14 +19,16 @@
         },
         deleteExpression(e) {
             if (this.parent) {
-                var index = this.parent.children.indexOf(e);
-                if (index > -1) {
-                    this.parent.children.splice(index, 1);
+                if (confirm("Delete expression?")) {
+                    var index = this.parent.children.indexOf(e);
+                    if (index > -1) {
+                        this.parent.children.splice(index, 1);
+                    }
                 }
             }
         },
         getOperandMetaData(name) {
-            return this.rule.metaData.operands.find(o => o.name == name);
+            return this.rule.metaData.operands.find(o => o.name === name);
         }
     },
     template: `
@@ -38,7 +40,7 @@
           </option>
         </select>
 
-        <button v-if="parent" v-on:click="deleteExpression(exp)" class="evt-detail-expression-delete">x</button>
+        <span v-if="parent" v-on:click="deleteExpression(exp)" class="glyphicon glyphicon-trash delete"></span>
         <expression v-for="child in exp.children" v-bind:exp="child" v-bind:parent="exp" v-bind:rule="rule" v-bind:key="child.key"></expression>
         
         <button v-on:click="addChild()">add</button>
@@ -71,33 +73,36 @@
             <input v-model="exp.value">
         </span>
 
-        <button v-on:click="deleteExpression(exp)" class="evt-detail-expression-delete">x</button>
-      </div>
+        <span v-on:click="deleteExpression(exp)" class="glyphicon glyphicon-trash delete"></span>
+</div>
 
     </div>
 `
-})
+});
 
 
 var app = new Vue({
     el: '#rules',
     data: {
         id: '',
-        rule: null
+        rule: null,
+        isSaving: false
     },
     methods: {
         // Save the current rule
         async save(e) {
             try {
+                this.isSaving = true;
                 await axios.put('', this.rule);
             } catch (error) {
                 console.log(error);
             }
+            this.isSaving = false;
         },
 
         // Add a new action
         addAction(action) {
-            if (this.rule.actions == null) {
+            if (this.rule.actions === null) {
                 this.rule.actions = [];
             }
 
@@ -119,19 +124,25 @@ var app = new Vue({
 
             this.rule.actions.push(a);
         },
+
         // Delete an action
         deleteAction(action) {
-            action.isActive = false;
-        },
-        // Figure out actionMetaData using type name
-        getMetaData(type) {
-            return this.rule.metaData.actionMetaData.find(i => i.type == type);
+            if (confirm("Remove " + this.getActionMetaData(action.type).name + " action?")) {
+                var index = this.rule.actions.indexOf(action);
+                if (index > -1) {
+                    this.rule.actions.splice(index, 1);
+                }
+            }
         },
 
-        getMetaDataProperty(type, name) {
-            var actionMeta = this.getMetaData(type);
+        getActionMetaDataProperty(type, name) {
+            var actionMeta = this.getActionMetaData(type);
 
-            return actionMeta.properties.find(i => i.name == name);
+            return actionMeta.properties.find(i => i.name === name);
+        },
+
+        getActionMetaData(type) {
+            return this.rule.metaData.actionMetaData.find(i => i.type === type);
         },
 
         // Generate a unique key for each expression entity
