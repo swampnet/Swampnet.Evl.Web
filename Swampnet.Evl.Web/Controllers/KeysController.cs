@@ -36,12 +36,32 @@ namespace Swampnet.Evl.Web.Controllers
 
             var vm = new KeysViewModel()
             {
+                SelectedKey = user.ActiveApiKey,
                 Keys = apiKeys
             };
 
             return View(vm);
         }
 
+
+        public async Task<IActionResult> Select(Guid id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            user.ActiveApiKey = id;
+
+            await _userManager.UpdateAsync(user);
+
+            var apiKeys = await _context.ApiKeys.Where(k => k.User.Id == user.Id).ToArrayAsync();
+
+            var vm = new KeysViewModel()
+            {
+                SelectedKey = user.ActiveApiKey,
+                Keys = apiKeys
+            };
+
+            return RedirectToAction("Index", "Home");
+        }
 
         public async Task<ActionResult> Edit(long id)
         {

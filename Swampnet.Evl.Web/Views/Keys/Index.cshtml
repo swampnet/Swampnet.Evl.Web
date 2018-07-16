@@ -14,7 +14,7 @@
     <tbody>
         @foreach (var item in Model.Keys)
         {
-            <tr>
+            <tr class="@(item.Key == Model.SelectedKey ? "apikey-selected" : "")">
                 <td>
                     @Html.DisplayFor(modelItem => item.Key)
                 </td>
@@ -22,12 +22,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IsEnabled)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Use", "Select", new { id = item.Key })
                 </td>
             </tr>
         }

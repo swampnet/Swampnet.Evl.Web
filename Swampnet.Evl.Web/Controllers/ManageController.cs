@@ -104,16 +104,16 @@ namespace Swampnet.Evl.Web.Controllers
                 }
             }
 
-            if (string.IsNullOrEmpty(model.ActiveApiKey))
-            {
-                user.ActiveApiKey = null;
-                await _userManager.UpdateAsync(user);
-            }
-            else if(user.ActiveApiKey != Guid.Parse(model.ActiveApiKey))
-            {
-                user.ActiveApiKey = Guid.Parse(model.ActiveApiKey);
-                await _userManager.UpdateAsync(user);
-            }
+            //if (string.IsNullOrEmpty(model.ActiveApiKey))
+            //{
+            //    user.ActiveApiKey = null;
+            //    await _userManager.UpdateAsync(user);
+            //}
+            //else if(user.ActiveApiKey != Guid.Parse(model.ActiveApiKey))
+            //{
+            //    user.ActiveApiKey = Guid.Parse(model.ActiveApiKey);
+            //    await _userManager.UpdateAsync(user);
+            //}
 
             if(model.TimeZone != user.TimeZone)
             {

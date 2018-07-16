@@ -90,3 +90,7 @@ button.evt-detail-expression-delete {
     font-size: small;
     color: red;
 }
+
+tr.apikey-selected {
+    background-color: aquamarine;
+}
